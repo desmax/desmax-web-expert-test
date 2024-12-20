@@ -1,5 +1,0 @@
-controllers:
-    resource:
-        path: ../src/Infra/Controller/
-        namespace: App\Infra\Controller
-    type: attribute
