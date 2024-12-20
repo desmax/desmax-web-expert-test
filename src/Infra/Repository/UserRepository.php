@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infra\Repository;
 
+use App\App\User\UserRepositoryInterface;
+use App\Application\Exception\NotFound;
 use App\Domain\Entity\User\User;
+use App\Domain\Model\UserId;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -17,7 +20,7 @@ use function sprintf;
  * @extends ServiceEntityRepository<User>
  * @implements PasswordUpgraderInterface<PasswordAuthenticatedUserInterface>
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -36,5 +39,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    public function getById(UserId $id): User
+    {
+        $user = $this->find($id);
+
+        if ($user === null) {
+            throw new NotFound(sprintf('User with ID "%s" not found.', $id));
+        }
+
+        return $user;
     }
 }

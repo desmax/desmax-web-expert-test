@@ -1,11 +1,14 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Infra\Model;
 
-use Symfony\Component\Uid\Uuid;
 use App\Domain\Model\UserId as BaseUserId;
+use Symfony\Component\Uid\Uuid;
 
-class UserId extends BaseUserId {
+final class UserId extends BaseUserId
+{
     public function __construct(
         ?string $value = null,
     ) {
