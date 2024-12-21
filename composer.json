@@ -24,14 +24,16 @@
         "symfony/yaml": "7.2.*"
     },
     "require-dev": {
+        "doctrine/coding-standard": "^12.0",
         "phpstan/phpstan": "^1.12.13",
+        "phpstan/phpstan-doctrine": "^1.5.7",
         "phpstan/phpstan-phpunit": "^1.4.2",
         "phpstan/phpstan-strict-rules": "^1.6.1",
-        "phpstan/phpstan-doctrine": "^1.5.7",
         "phpstan/phpstan-symfony": "^1.4.12",
         "phpstan/phpstan-webmozart-assert": "^1.2.11",
-        "doctrine/coding-standard": "^12.0",
-        "symfony/maker-bundle": "^1.61"
+        "symfony/maker-bundle": "^1.61",
+        "symfony/phpunit-bridge": "^7.2",
+        "webmozart/assert": "^1.11"
     },
     "config": {
         "allow-plugins": {

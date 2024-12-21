@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Exception;
+namespace App\App\Exception;
 
 use Exception;
 use Psr\Container\NotFoundExceptionInterface;

@@ -43,7 +43,6 @@ jobs:
         run: curl -v --fail-with-body http://localhost
       -
         name: Check HTTPS reachability
-        if: false # Remove this line when the homepage will be configured, or change the path to check
         run: curl -vk --fail-with-body https://localhost
       -
         name: Check Mercure reachability
@@ -61,8 +60,10 @@ jobs:
         name: Run PHPStan
         run: docker compose exec php vendor/bin/phpstan
       -
+        name: Install phpunit
+        run: docker compose exec -T php bin/phpunit install
+      -
         name: Run PHPUnit
-        if: false # Remove this line if PHPUnit is installed
         run: docker compose exec -T php bin/phpunit
       -
         name: Doctrine Schema Validator

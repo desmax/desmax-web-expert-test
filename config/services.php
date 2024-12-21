@@ -1,13 +1,15 @@
 <?php
 
-namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+declare(strict_types=1);
 
-return static function(ContainerConfigurator $configurator): void {
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
 
     $services->defaults()
-        ->autowire(true)
-        ->autoconfigure(true);
+        ->autowire()
+        ->autoconfigure();
 
     $services->load('App\\', '../src/')
         ->exclude([

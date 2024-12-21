@@ -28,3 +28,5 @@ parameters:
     checkUninitializedProperties: true
     checkImplicitMixed: true
     editorUrl: 'phpstorm://open?file=/Users/khr/Projects/drinks/%%relFile%%&line=%%line%%'
+    bootstrapFiles:
+        - vendor/bin/.phpunit/phpunit/vendor/autoload.php
