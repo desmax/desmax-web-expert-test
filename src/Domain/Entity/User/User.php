@@ -24,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /** @var string The hashed password */
     private string $password;
 
-    private DateTimeImmutable $createdAt;
+    private readonly DateTimeImmutable $createdAt;
 
     private ?DateTimeImmutable $updatedAt = null;
 

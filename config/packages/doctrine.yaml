@@ -5,6 +5,7 @@ doctrine:
         use_savepoints: true
         types:
             user_id: App\Infra\Doctrine\Type\UserIdType
+            category_id: App\Infra\Doctrine\Type\CategoryIdType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
