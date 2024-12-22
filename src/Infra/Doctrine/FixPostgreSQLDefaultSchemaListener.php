@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infra;
+namespace App\Infra\Doctrine;
 
 use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\Schema\PostgreSQLSchemaManager;

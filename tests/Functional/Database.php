@@ -42,7 +42,8 @@ trait Database
                 '--env' => 'test',
             ],
             [
-                'command' => 'doctrine:schema:create',
+                'command' => 'doctrine:schema:update',
+                '--force' => true,
                 '--env' => 'test',
             ],
         ];

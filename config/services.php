@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use App\Infra\FixPostgreSQLDefaultSchemaListener;
+use App\Infra\Doctrine\FixPostgreSQLDefaultSchemaListener;
 use Doctrine\ORM\Tools\ToolEvents;
 
 return static function (ContainerConfigurator $configurator): void {
