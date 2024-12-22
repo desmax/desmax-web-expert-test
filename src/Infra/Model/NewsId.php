@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Infra\Model;
 
-use App\Domain\Model\UserId as BaseId;
+use App\Domain\Model\NewsId as BaseId;
 use Symfony\Component\Uid\Uuid;
 
-final class UserId extends BaseId
+final class NewsId extends BaseId
 {
     public function __construct(
         ?string $value = null,

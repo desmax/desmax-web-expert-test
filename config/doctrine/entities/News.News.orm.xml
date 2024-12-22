@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Entity\News\News" table="news">
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="onPreUpdate"/>
+        </lifecycle-callbacks>
+
+        <id name="id" type="news_id" column="id" />
+
+        <field name="title" type="string" column="title" length="255" />
+        <field name="shortDescription" type="text" column="short_description" />
+        <field name="content" type="text" column="content" />
+        <field name="picture" type="string" column="picture" nullable="true" />
+
+        <field name="createdAt" type="datetime_immutable" column="created_at">
+            <options>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>
+
+        <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+
+        <many-to-many field="categories" target-entity="App\Domain\Entity\Category\Category">
+            <join-table name="news_categories">
+                <join-columns>
+                    <join-column name="news_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="category_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+
+        <many-to-one field="author" target-entity="App\Domain\Entity\User\User">
+            <join-column name="author_id" referenced-column-name="id" nullable="false"/>
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>
