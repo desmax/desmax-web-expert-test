@@ -14,7 +14,8 @@
 
                 <div class="nav-links">
                     <a href="{{ path('app_feed') }}">View site</a>
-                    <a href="{{ path('app_admin_dashboard') }}">Admin Panel</a>
+                    <a href="{{ path('app_admin_category_list') }}" {% if app.request.get('_route') starts with 'app_admin_category' %}class="active"{% endif %}>Categories</a>
+                    <a href="{{ path('app_admin_news_list') }}" {% if app.request.get('_route') starts with 'app_admin_news' %}class="active"{% endif %}>News</a>
                     <a href="{{ path('_logout_main') }}">Logout</a>
                 </div>
             </nav>

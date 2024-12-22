@@ -5,16 +5,11 @@ declare(strict_types=1);
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use App\Infra\Controller\FeedController;
-use App\Infra\Controller\Admin\DashboardController;
 use App\Infra\Controller\LoginController;
 
 return static function (RoutingConfigurator $routes): void {
     $routes->add('app_feed', '/')
         ->controller(FeedController::class)
-        ->methods([Request::METHOD_GET])
-    ;
-    $routes->add('app_admin_dashboard', '/admin')
-        ->controller(DashboardController::class)
         ->methods([Request::METHOD_GET]);
 
     $routes->add('app_login', '/login')
