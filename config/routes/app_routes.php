@@ -5,6 +5,8 @@ declare(strict_types=1);
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use App\Infra\Controller\FeedController;
+use App\Infra\Controller\Admin\DashboardController;
+use App\Infra\Controller\LoginController;
 
 return static function (RoutingConfigurator $routes): void {
     $routes->add('app_feed', '/')
@@ -12,6 +14,10 @@ return static function (RoutingConfigurator $routes): void {
         ->methods([Request::METHOD_GET])
     ;
     $routes->add('app_admin_dashboard', '/admin')
-        ->controller(FeedController::class)
+        ->controller(DashboardController::class)
         ->methods([Request::METHOD_GET]);
+
+    $routes->add('app_login', '/login')
+        ->controller(LoginController::class)
+        ->methods([Request::METHOD_GET, Request::METHOD_POST]);
 };

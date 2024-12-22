@@ -10,4 +10,6 @@ use App\Domain\Model\UserId;
 interface UserRepositoryInterface
 {
     public function getById(UserId $id): User;
+
+    public function getByEmail(string $email): User;
 }
