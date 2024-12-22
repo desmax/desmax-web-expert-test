@@ -1,0 +1,4 @@
+.admin .main-header,
+.admin .main-footer {
+    background-color: #1a237e; /* Darker blue instead of #2c3e50 */
+}

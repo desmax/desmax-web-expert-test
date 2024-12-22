@@ -7,9 +7,13 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
 
+    <meta name="description" content="{% block meta_description %}Your trusted source for the latest news, breaking stories, and in-depth reporting.{% endblock %}">
+
     <title>{% block title %}News Portal{% endblock %}</title>
 </head>
-<body>
+<body class="{% block bodyClass %}front{% endblock %}">
+
+{% block header %}
 <header class="main-header">
     <div class="container">
         <nav class="main-nav">
@@ -26,8 +30,9 @@
         </nav>
     </div>
 </header>
+{% endblock %}
 
-<main class="main-content">
+<div class="main-content">
     <div class="container">
         {% for label, messages in app.flashes %}
             {% for message in messages %}
@@ -39,7 +44,7 @@
 
         {% block content %}{% endblock %}
     </div>
-</main>
+</div>
 
 <footer class="main-footer">
     <div class="container">

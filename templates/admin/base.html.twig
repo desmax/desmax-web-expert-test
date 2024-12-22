@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block bodyClass %}admin{% endblock %}
+
+{% block header %}
+    <header class="main-header">
+        <div class="container">
+            <nav class="main-nav">
+                <div class="nav-brand">
+                    <a href="{{ path('app_admin_dashboard') }}">Admin</a>
+                </div>
+
+                <div class="nav-links">
+                    <a href="{{ path('app_feed') }}">View site</a>
+                    <a href="{{ path('app_admin_dashboard') }}">Admin Panel</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <h1>Here will be the dashboard!</h1>
+{% endblock %}
+
+{% block importmap %}{{ importmap('admin') }}{% endblock %}
