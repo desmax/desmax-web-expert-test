@@ -66,6 +66,9 @@ jobs:
         name: Doctrine Schema Validator
         run: docker compose exec -T php bin/console -e test doctrine:schema:validate
       -
+        name: Assets compilation
+        run: docker compose exec -T php bin/console -e test asset-map:compile
+      -
         name: Twig lint
         run: docker compose exec -T php bin/console -e test lint:twig templates
   lint:
