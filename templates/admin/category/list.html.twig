@@ -6,29 +6,29 @@
 {#        <a href="{{ path('app_admin_category_new') }}" class="btn btn-primary">Create New Category</a>#}
     </div>
 
-{#    <div class="content-body">#}
-{#        <table class="admin-table">#}
-{#            <thead>#}
-{#            <tr>#}
-{#                <th>Title</th>#}
-{#                <th>Created</th>#}
-{#                <th>Actions</th>#}
-{#            </tr>#}
-{#            </thead>#}
-{#            <tbody>#}
-{#            {% for category in categories %}#}
-{#                <tr>#}
-{#                    <td>{{ category.title }}</td>#}
-{#                    <td>{{ category.createdAt|date('Y-m-d H:i') }}</td>#}
-{#                    <td>#}
+    <div class="content-body">
+        <table class="admin-table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                    <td>{{ category.title }}</td>
+                    <td>{{ category.createdAt|date('Y-m-d H:i') }}</td>
+                    <td>
 {#                        <a href="{{ path('app_admin_category_edit', {id: category.id}) }}" class="btn btn-sm">Edit</a>#}
 {#                        <form action="{{ path('app_admin_category_delete', {id: category.id}) }}" method="post" class="inline-form" onsubmit="return confirm('Are you sure?')">#}
 {#                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>#}
 {#                        </form>#}
-{#                    </td>#}
-{#                </tr>#}
-{#            {% endfor %}#}
-{#            </tbody>#}
-{#        </table>#}
-{#    </div>#}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
