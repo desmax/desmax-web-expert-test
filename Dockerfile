@@ -30,6 +30,7 @@ RUN set -eux; \
 		apcu \
 		intl \
 		opcache \
+		excimer \
 		zip \
 	;
 
