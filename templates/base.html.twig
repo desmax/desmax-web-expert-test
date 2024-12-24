@@ -21,8 +21,20 @@
                 <a href="{{ path('app_feed') }}">News Portal</a>
             </div>
 
+            {% set navigation = {
+                'app_feed': {
+                    'label': 'Home',
+                    'prefix': 'app_feed'
+                },
+            } %}
+
             <div class="nav-links">
-                <a href="{{ path('app_feed') }}">Home</a>
+                {% for route, item in navigation %}
+                    <a href="{{ path(route) }}"
+                            {{ app.request.get('_route') starts with item.prefix ? 'class="active"' }}>
+                        {{ item.label }}
+                    </a>
+                {% endfor %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('app_admin_dashboard') }}">Admin Panel</a>
                 {% endif %}

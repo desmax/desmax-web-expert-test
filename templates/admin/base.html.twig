@@ -12,11 +12,32 @@
                     <a href="{{ path('app_admin_dashboard') }}">Admin</a>
                 </div>
 
+                {% set navigation = {
+                    'app_feed': {
+                        'label': 'View site',
+                        'prefix': 'app_feed'
+                    },
+                    'app_admin_category_list': {
+                        'label': 'Categories',
+                        'prefix': 'app_admin_category',
+                    },
+                    'app_admin_news_list': {
+                        'label': 'News',
+                        'prefix': 'app_admin_news',
+                    },
+                    '_logout_main': {
+                        'label': 'Logout',
+                        'prefix': '_logout',
+                    }
+                } %}
+
                 <div class="nav-links">
-                    <a href="{{ path('app_feed') }}">View site</a>
-                    <a href="{{ path('app_admin_category_list') }}" {% if app.request.get('_route') starts with 'app_admin_category' %}class="active"{% endif %}>Categories</a>
-                    <a href="{{ path('app_admin_news_list') }}" {% if app.request.get('_route') starts with 'app_admin_news' %}class="active"{% endif %}>News</a>
-                    <a href="{{ path('_logout_main') }}">Logout</a>
+                    {% for route, item in navigation %}
+                        <a href="{{ path(route) }}"
+                            {{ app.request.get('_route') starts with item.prefix ? 'class="active"' }}>
+                            {{ item.label }}
+                        </a>
+                    {% endfor %}
                 </div>
             </nav>
         </div>
