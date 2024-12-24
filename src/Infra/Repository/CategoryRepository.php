@@ -8,13 +8,14 @@ use App\App\Category\CategoryRepositoryInterface;
 use App\App\Exception\NotFound;
 use App\Domain\Entity\Category\Category;
 use App\Domain\Model\CategoryId;
+use App\Infra\Model\CategoryId as CategoryIdImpl;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function sprintf;
 
 /** @extends ServiceEntityRepository<Category> */
-class CategoryRepository extends ServiceEntityRepository implements CategoryRepositoryInterface
+class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -35,5 +36,10 @@ class CategoryRepository extends ServiceEntityRepository implements CategoryRepo
     public function getList(int $limit, int $offset): array
     {
         return $this->findBy([], [], $limit, $offset);
+    }
+
+    protected function convertStringToEntityId(string $id): CategoryId
+    {
+        return new CategoryIdImpl($id);
     }
 }

@@ -8,6 +8,7 @@ use App\App\Exception\NotFound;
 use App\App\User\UserRepositoryInterface;
 use App\Domain\Entity\User\User;
 use App\Domain\Model\UserId;
+use App\Infra\Model\UserId as UserIdImpl;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -20,7 +21,7 @@ use function sprintf;
  * @extends ServiceEntityRepository<User>
  * @implements PasswordUpgraderInterface<PasswordAuthenticatedUserInterface>
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface, UserRepositoryInterface
+class UserRepository extends BaseRepository implements PasswordUpgraderInterface, UserRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -61,5 +62,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         return $user;
+    }
+
+    protected function convertStringToEntityId(string $id): UserId
+    {
+        return new UserIdImpl($id);
     }
 }
