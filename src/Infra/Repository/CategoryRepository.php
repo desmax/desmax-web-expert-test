@@ -25,7 +25,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     {
         $category = $this->find($id);
 
-        if ($category === null) {
+        if ($category === null || $category->getDeletedAt() !== null) {
             throw new NotFound(sprintf('Category with ID "%s" not found.', $id));
         }
 
@@ -34,7 +34,13 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getList(int $limit, int $offset): array
     {
-        return $this->findBy([], [], $limit, $offset);
+        return $this->findBy(['deletedAt' => null], [], $limit, $offset);
+    }
+
+    public function archive(Category $category): void
+    {
+        $category->archive();
+        $this->getEntityManager()->flush();
     }
 
     protected function convertStringToEntityId(string $id): CategoryId

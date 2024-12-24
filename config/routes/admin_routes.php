@@ -8,6 +8,7 @@ use App\Infra\Controller\Admin\DashboardController;
 use App\Infra\Controller\Admin\Category\CategoriesListController;
 use App\Infra\Controller\Admin\Category\CategoriesCreateController;
 use App\Infra\Controller\Admin\Category\CategoriesEditController;
+use App\Infra\Controller\Admin\Category\CategoriesArchiveController;
 use App\Infra\Controller\Admin\News\NewsListController;
 
 return static function (RoutingConfigurator $routes): void {
@@ -26,6 +27,10 @@ return static function (RoutingConfigurator $routes): void {
     $routes->add('app_admin_category_edit', '/admin/categories/{id}/edit')
         ->controller(CategoriesEditController::class)
         ->methods([Request::METHOD_GET, Request::METHOD_POST]);
+
+    $routes->add('app_admin_category_archive', '/admin/categories/{id}/archive')
+        ->controller(CategoriesArchiveController::class)
+        ->methods([Request::METHOD_POST]);
 
     $routes->add('app_admin_news_list', '/admin/news')
         ->controller(NewsListController::class)

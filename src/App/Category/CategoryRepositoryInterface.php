@@ -13,4 +13,6 @@ interface CategoryRepositoryInterface
 
     /** @return Category[] */
     public function getList(int $limit, int $offset): array;
+
+    public function archive(Category $category): void;
 }

@@ -11,6 +11,7 @@ class Category
 {
     private readonly DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt = null;
+    private ?DateTimeImmutable $deletedAt = null;
 
     public function __construct(
         private readonly CategoryId $id,
@@ -47,5 +48,15 @@ class Category
     public function onPreUpdate(): void
     {
         $this->updatedAt = new DateTimeImmutable();
+    }
+
+    public function getDeletedAt(): ?DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+
+    public function archive(): void
+    {
+        $this->deletedAt = new DateTimeImmutable();
     }
 }

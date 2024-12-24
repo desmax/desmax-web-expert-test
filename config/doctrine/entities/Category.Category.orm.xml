@@ -16,6 +16,7 @@
         </field>
 
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+        <field name="deletedAt" type="datetime_immutable" column="deleted_at" nullable="true"/>
 
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="onPreUpdate"/>
