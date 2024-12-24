@@ -38,8 +38,7 @@ export default class extends Controller {
           type: 'success'
         }
       });
-      this.element.dispatchEvent(event);
-
+      document.dispatchEvent(event);
     } catch (error) {
       console.error('Error:', error);
       // Dispatch error event
@@ -50,7 +49,7 @@ export default class extends Controller {
           type: 'error'
         }
       });
-      this.element.dispatchEvent(event);
+      document.dispatchEvent(event);
     }
   }
 }

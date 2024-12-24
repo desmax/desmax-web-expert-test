@@ -46,13 +46,17 @@
 
 <div class="main-content">
     <div class="container">
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+        <div data-controller="notification">
+            <div data-notification-target="container" class="notification-container">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
 
         {% block content %}{% endblock %}
     </div>
