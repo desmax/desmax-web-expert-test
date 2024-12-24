@@ -18,19 +18,23 @@ class CategoriesEditController extends AbstractController
 
     public function __invoke(Category $category, Request $request): Response
     {
-        if ($request->isMethod('POST')) {
-            $title = $request->request->getString('title');
+        $form = $this->createForm(CategoryType::class, CategoryDTO::fromCategory($category));
+        $form->handleRequest($request);
 
-            if ($title !== '') {
-                $category->setTitle($title);
-                $this->em->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dto = $form->getData();
+            $category->setTitle($dto->title);
 
-                $this->addFlash('success', 'Category updated successfully.');
+            $this->em->flush();
 
-                return $this->redirectToRoute('app_admin_category_list');
-            }
+            $this->addFlash('success', 'Category updated successfully');
+
+            return $this->redirectToRoute('app_admin_category_list');
         }
 
-        return $this->render('admin/category/edit.html.twig', ['category' => $category]);
+        return $this->render('admin/category/edit.html.twig', [
+            'category' => $category,
+            'form' => $form,
+        ]);
     }
 }

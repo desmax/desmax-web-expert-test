@@ -19,25 +19,25 @@ class CategoriesCreateController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
-        // TODO add form validation
-        if ($request->isMethod('POST')) {
-            $title = $request->request->getString('title');
+        $form = $this->createForm(CategoryType::class, new CategoryDTO());
+        $form->handleRequest($request);
 
-            if ($title !== '') {
-                $category = new Category(
-                    new CategoryId(),
-                    $title
-                );
+        if ($form->isSubmitted() && $form->isValid()) {
+            $dto = $form->getData();
 
-                $this->em->persist($category);
-                $this->em->flush();
+            $category = new Category(
+                new CategoryId(),
+                $dto->title,
+            );
 
-                $this->addFlash('success', 'Category created successfully.');
+            $this->em->persist($category);
+            $this->em->flush();
 
-                return $this->redirectToRoute('app_admin_category_list');
-            }
+            $this->addFlash('success', 'Category created successfully');
+
+            return $this->redirectToRoute('app_admin_category_list');
         }
 
-        return $this->render('admin/category/create.html.twig');
+        return $this->render('admin/category/create.html.twig', ['form' => $form]);
     }
 }
