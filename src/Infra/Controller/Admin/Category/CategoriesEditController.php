@@ -19,9 +19,9 @@ class CategoriesEditController extends AbstractController
     public function __invoke(Category $category, Request $request): Response
     {
         if ($request->isMethod('POST')) {
-            $title = $request->request->get('title');
+            $title = $request->request->getString('title');
 
-            if ($title) {
+            if ($title !== '') {
                 $category->setTitle($title);
                 $this->em->flush();
 
@@ -31,8 +31,6 @@ class CategoriesEditController extends AbstractController
             }
         }
 
-        return $this->render('admin/category/edit.html.twig', [
-            'category' => $category,
-        ]);
+        return $this->render('admin/category/edit.html.twig', ['category' => $category]);
     }
 }

@@ -1,13 +1,22 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Infra\Repository;
 
-
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\LockMode;
 
+use function is_string;
+
+/**
+ * @template T of object
+ * @extends ServiceEntityRepository<T>
+ */
 abstract class BaseRepository extends ServiceEntityRepository
 {
-    public function find($id, $lockMode = null, int|null $lockVersion = null): null|object
+    /** @return T|null */
+    public function find($id, LockMode|int|null $lockMode = null, int|null $lockVersion = null): object|null
     {
         if (is_string($id)) {
             $id = $this->convertStringToEntityId($id);

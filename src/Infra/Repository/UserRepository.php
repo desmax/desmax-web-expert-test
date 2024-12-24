@@ -9,7 +9,6 @@ use App\App\User\UserRepositoryInterface;
 use App\Domain\Entity\User\User;
 use App\Domain\Model\UserId;
 use App\Infra\Model\UserId as UserIdImpl;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -18,7 +17,7 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use function sprintf;
 
 /**
- * @extends ServiceEntityRepository<User>
+ * @extends BaseRepository<User>
  * @implements PasswordUpgraderInterface<PasswordAuthenticatedUserInterface>
  */
 class UserRepository extends BaseRepository implements PasswordUpgraderInterface, UserRepositoryInterface

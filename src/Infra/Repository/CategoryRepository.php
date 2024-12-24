@@ -9,12 +9,11 @@ use App\App\Exception\NotFound;
 use App\Domain\Entity\Category\Category;
 use App\Domain\Model\CategoryId;
 use App\Infra\Model\CategoryId as CategoryIdImpl;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function sprintf;
 
-/** @extends ServiceEntityRepository<Category> */
+/** @extends BaseRepository<Category> */
 class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
