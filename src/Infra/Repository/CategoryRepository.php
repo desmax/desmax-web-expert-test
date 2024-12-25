@@ -34,7 +34,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function getList(int $limit, int $offset): array
     {
-        return $this->findBy(['deletedAt' => null], [], $limit, $offset);
+        return $this->findBy(['deletedAt' => null], ['createdAt' => 'DESC'], $limit, $offset);
     }
 
     public function archive(Category $category): void
