@@ -12,6 +12,7 @@ use App\Infra\Controller\Admin\Category\CategoriesArchiveController;
 use App\Infra\Controller\Admin\News\NewsListController;
 use App\Infra\Controller\Admin\News\NewsCreateController;
 use App\Infra\Controller\Admin\News\NewsEditController;
+use App\Infra\Controller\Admin\News\NewsArchiveController;
 
 return static function (RoutingConfigurator $routes): void {
     $routes->add('app_admin_dashboard', '/admin')
@@ -47,6 +48,6 @@ return static function (RoutingConfigurator $routes): void {
         ->methods([Request::METHOD_GET, Request::METHOD_POST]);
 
     $routes->add('app_admin_news_archive', '/admin/news/{id}/archive')
-        ->controller(NewsCreateController::class)
+        ->controller(NewsArchiveController::class)
         ->methods([Request::METHOD_POST]);
 };
