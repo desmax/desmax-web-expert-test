@@ -27,5 +27,11 @@ class NewsDTO
     #[Assert\Count(min: 1, minMessage: 'Select at least one category')]
     public array $categories = [];
 
+    #[Assert\File(
+        maxSize: '2M',
+        mimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+        maxSizeMessage: 'The file is too large. Maximum size is 2MB.',
+        mimeTypesMessage: 'Please upload a valid image file (JPEG, PNG, WEBP)'
+    )]
     public ?UploadedFile $picture = null;
 }

@@ -230,3 +230,22 @@ body {
         width: 50px;
     }
 }
+
+/* Error styling */
+form .required::after {
+    content: '*';
+    color: #dc3545;
+    margin-left: 4px;
+}
+
+form ul {
+    list-style: none;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin: 0 0 0.5rem 0;
+    padding: 0;
+}
+
+form ul li {
+    margin-bottom: 0.25rem;
+}

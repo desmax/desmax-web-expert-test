@@ -151,3 +151,21 @@ form select:focus {
         text-align: center;
     }
 }
+
+input[type="file"] {
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+    width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    border-color: #1a237e;
+}
+
+.help-text {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}

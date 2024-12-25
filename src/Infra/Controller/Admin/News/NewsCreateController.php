@@ -12,10 +12,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Uid\Uuid;
 
-#[IsGranted('ROLE_ADMIN')]
 class NewsCreateController extends AbstractController
 {
     public function __construct(private EntityManagerInterface $em, private CurrentUserFetcherInterface $currentUserFetcher)
