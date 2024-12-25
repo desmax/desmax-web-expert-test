@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Domain\Entity\News\Comment" table="comments">
+    <entity name="App\Domain\Entity\News\Comment" table="comments" repository-class="App\Infra\Repository\CommentRepository">
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="onPreUpdate"/>
         </lifecycle-callbacks>
@@ -20,6 +20,8 @@
         </field>
 
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+
+        <field name="deletedAt" type="date_immutable" column="deleted_at" nullable="true"/>
 
         <many-to-one field="news" target-entity="App\Domain\Entity\News\News">
             <join-column name="news_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>

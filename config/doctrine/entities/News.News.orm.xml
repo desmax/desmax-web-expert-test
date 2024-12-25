@@ -37,6 +37,8 @@
             </join-table>
         </many-to-many>
 
+        <one-to-many field="comments" target-entity="App\Domain\Entity\News\Comment" mapped-by="news" />
+
         <many-to-one field="author" target-entity="App\Domain\Entity\User\User">
             <join-column name="author_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>

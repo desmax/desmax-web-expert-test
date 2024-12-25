@@ -20,6 +20,9 @@ class News
     /** @var Collection<int, Category> */
     private Collection $categories;
 
+    /** @var Collection<int, Comment> */
+    private Collection $comments;
+
     private ?string $picture = null;
 
     public function __construct(
@@ -31,6 +34,7 @@ class News
     ) {
         $this->createdAt  = new DateTimeImmutable();
         $this->categories = new ArrayCollection();
+        $this->comments   = new ArrayCollection();
     }
 
     public function getId(): NewsId
@@ -113,6 +117,12 @@ class News
         $this->categories->removeElement($category);
 
         return $this;
+    }
+
+    /** @return Collection<int, Comment> */
+    public function getComments(): Collection
+    {
+        return $this->comments->filter(static fn (Comment $comment): bool => $comment->getDeletedAt() === null);
     }
 
     public function onPreUpdate(): void

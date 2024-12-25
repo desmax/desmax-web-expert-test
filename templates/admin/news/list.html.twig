@@ -33,6 +33,7 @@
                             </td>
                             <td>{{ news_item.createdAt|date('Y-m-d H:i') }}</td>
                             <td>
+                                <a href="{{ path('app_admin_news_comments', {id: news_item.id}) }}" class="btn btn-sm">Comments</a>
                                 <a href="{{ path('app_admin_news_edit', {id: news_item.id}) }}" class="btn btn-sm">Edit</a>
                                 <button
                                     type="button"

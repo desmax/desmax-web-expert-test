@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Infra\Controller\Admin\News\NewsCommentsController;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use App\Infra\Controller\Admin\DashboardController;
@@ -13,6 +14,7 @@ use App\Infra\Controller\Admin\News\NewsListController;
 use App\Infra\Controller\Admin\News\NewsCreateController;
 use App\Infra\Controller\Admin\News\NewsEditController;
 use App\Infra\Controller\Admin\News\NewsArchiveController;
+use App\Infra\Controller\Admin\News\NewsCommentArchiveController;
 
 return static function (RoutingConfigurator $routes): void {
     $routes->add('app_admin_dashboard', '/admin')
@@ -49,5 +51,13 @@ return static function (RoutingConfigurator $routes): void {
 
     $routes->add('app_admin_news_archive', '/admin/news/{id}/archive')
         ->controller(NewsArchiveController::class)
+        ->methods([Request::METHOD_POST]);
+
+    $routes->add('app_admin_news_comments', '/admin/news/{id}/comments')
+        ->controller(NewsCommentsController::class)
+        ->methods([Request::METHOD_GET]);
+
+    $routes->add('app_admin_comment_archive', '/admin/comments/{id}/archive')
+        ->controller(NewsCommentArchiveController::class)
         ->methods([Request::METHOD_POST]);
 };

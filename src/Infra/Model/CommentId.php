@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infra\Model;
 
-use App\Domain\Model\UserId as BaseId;
+use App\Domain\Model\CommentId as BaseId;
 use Symfony\Component\Uid\Uuid;
 
 final class CommentId extends BaseId
