@@ -40,4 +40,12 @@ return static function (RoutingConfigurator $routes): void {
     $routes->add('app_admin_news_create', '/admin/news/create')
         ->controller(NewsCreateController::class)
         ->methods([Request::METHOD_GET, Request::METHOD_POST]);
+
+    $routes->add('app_admin_news_edit', '/admin/news/edit')
+        ->controller(NewsCreateController::class)
+        ->methods([Request::METHOD_GET, Request::METHOD_POST]);
+
+    $routes->add('app_admin_news_archive', '/admin/news/{id}/archive')
+        ->controller(NewsCreateController::class)
+        ->methods([Request::METHOD_POST]);
 };

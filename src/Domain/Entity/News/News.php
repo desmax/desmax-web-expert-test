@@ -15,6 +15,7 @@ class News
 {
     private readonly DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt = null;
+    private ?DateTimeImmutable $deletedAt = null;
 
     /** @var Collection<int, Category> */
     private Collection $categories;
@@ -117,5 +118,15 @@ class News
     public function onPreUpdate(): void
     {
         $this->updatedAt = new DateTimeImmutable();
+    }
+
+    public function getDeletedAt(): ?DateTimeImmutable
+    {
+        return $this->deletedAt;
+    }
+
+    public function archive(): void
+    {
+        $this->deletedAt = new DateTimeImmutable();
     }
 }

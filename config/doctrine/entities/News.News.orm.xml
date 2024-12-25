@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                     http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Domain\Entity\News\News" table="news">
+    <entity name="App\Domain\Entity\News\News" table="news" repository-class="App\Infra\Repository\NewsRepository">
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="onPreUpdate"/>
         </lifecycle-callbacks>
@@ -23,6 +23,8 @@
         </field>
 
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
+
+        <field name="deletedAt" type="date_immutable" column="deleted_at" nullable="true"/>
 
         <many-to-many field="categories" target-entity="App\Domain\Entity\Category\Category">
             <join-table name="news_categories">
