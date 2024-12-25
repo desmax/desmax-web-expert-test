@@ -7,6 +7,7 @@ doctrine:
             user_id: App\Infra\Doctrine\Type\UserIdType
             category_id: App\Infra\Doctrine\Type\CategoryIdType
             news_id: App\Infra\Doctrine\Type\NewsIdType
+            comment_id: App\Infra\Doctrine\Type\CommentIdType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

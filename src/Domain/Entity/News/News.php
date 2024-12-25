@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\Collection;
 
 class News
 {
-    private DateTimeImmutable $createdAt;
+    private readonly DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt = null;
 
     /** @var Collection<int, Category> */
