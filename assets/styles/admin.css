@@ -152,7 +152,7 @@ form select:focus {
     }
 }
 
-input[type="file"] {
+form input[type="file"] {
     border: 1px solid #e2e8f0;
     padding: 1rem;
     width: 100%;
@@ -160,12 +160,16 @@ input[type="file"] {
     cursor: pointer;
 }
 
-input[type="file"]:hover {
+form input[type="file"]:hover {
     border-color: #1a237e;
 }
 
-.help-text {
+form .help-text {
     color: #6b7280;
     font-size: 0.875rem;
     margin-top: 0.5rem;
+}
+
+form .img-thumbnail {
+    max-width: 100px;
 }

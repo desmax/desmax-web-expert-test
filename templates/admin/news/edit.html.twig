@@ -12,6 +12,12 @@
             <div class="card-body">
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
+                {% if form.vars.data.currentPicture %}
+                    <div>
+                        <p>Current Picture</p>
+                        <img src="{{ asset('uploads/news/' ~ form.vars.data.currentPicture) }}" alt="Current picture" class="img-thumbnail">
+                    </div>
+                {% endif %}
                 <div class="form-actions">
                     <a href="{{ path('app_admin_news_list') }}" class="btn">Cancel</a>
                     <button type="submit" class="btn btn-primary">Save</button>

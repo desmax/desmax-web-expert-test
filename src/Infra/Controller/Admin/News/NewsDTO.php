@@ -36,6 +36,8 @@ class NewsDTO
             mimeTypesMessage: 'Please upload a valid image file (JPEG, PNG, WEBP)'
         )]
         public UploadedFile|null $picture = null,
+
+        public ?string $currentPicture = null,
     ) {
     }
 
@@ -46,6 +48,7 @@ class NewsDTO
             shortDescription: $news->getShortDescription(),
             content: $news->getContent(),
             categories: $news->getCategories()->toArray(),
+            currentPicture: $news->getPicture(),
         );
     }
 }

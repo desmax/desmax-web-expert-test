@@ -54,7 +54,11 @@ class NewsEditController extends AbstractController
             $this->em->flush();
 
             // Remove old picture
-            if ($oldPicture !== null && file_exists($this->getParameter('news_images_directory') . '/' . $oldPicture)) {
+            if (
+                $oldPicture !== null
+                && $oldPicture !== $news->getPicture()
+                && file_exists($this->getParameter('news_images_directory') . '/' . $oldPicture)
+            ) {
                 unlink($this->getParameter('news_images_directory') . '/' . $oldPicture);
             }
 
