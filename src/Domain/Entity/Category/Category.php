@@ -59,4 +59,9 @@ class Category
     {
         $this->deletedAt = new DateTimeImmutable();
     }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
 }

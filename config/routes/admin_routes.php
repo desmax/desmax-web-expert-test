@@ -10,6 +10,7 @@ use App\Infra\Controller\Admin\Category\CategoriesCreateController;
 use App\Infra\Controller\Admin\Category\CategoriesEditController;
 use App\Infra\Controller\Admin\Category\CategoriesArchiveController;
 use App\Infra\Controller\Admin\News\NewsListController;
+use App\Infra\Controller\Admin\News\NewsCreateController;
 
 return static function (RoutingConfigurator $routes): void {
     $routes->add('app_admin_dashboard', '/admin')
@@ -35,4 +36,8 @@ return static function (RoutingConfigurator $routes): void {
     $routes->add('app_admin_news_list', '/admin/news')
         ->controller(NewsListController::class)
         ->methods([Request::METHOD_GET]);
+
+    $routes->add('app_admin_news_create', '/admin/news/create')
+        ->controller(NewsCreateController::class)
+        ->methods([Request::METHOD_GET, Request::METHOD_POST]);
 };

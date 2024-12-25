@@ -1,0 +1,23 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Create News{% endblock %}
+
+{% block content %}
+    <div class="content-header">
+        <h1>Create News</h1>
+    </div>
+
+    <div class="content-body">
+        <div class="card">
+            <div class="card-body">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <div class="form-actions">
+                    <a href="{{ path('app_admin_news_list') }}" class="btn">Cancel</a>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

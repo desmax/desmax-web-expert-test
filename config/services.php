@@ -7,6 +7,9 @@ use App\Infra\Doctrine\FixPostgreSQLDefaultSchemaListener;
 use Doctrine\ORM\Tools\ToolEvents;
 
 return static function (ContainerConfigurator $configurator): void {
+    $parameters = $configurator->parameters();
+    $parameters->set('news_images_directory', '%kernel.project_dir%/public/uploads/news');
+
     $services = $configurator->services();
 
     $services->defaults()

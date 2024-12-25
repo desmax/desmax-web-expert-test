@@ -27,6 +27,7 @@
         "symfony/stimulus-bundle": "^2.22",
         "symfony/twig-bundle": "7.2.*",
         "symfony/uid": "7.2.*",
+        "symfony/ux-autocomplete": "^2.22",
         "symfony/validator": "*",
         "symfony/yaml": "7.2.*"
     },
