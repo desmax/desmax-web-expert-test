@@ -102,14 +102,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     }
 
     /**
-     * @param array<array{
-     *     id: CategoryId,
-     *     title: string,
-     *     news_id: NewsId|null,
-     *     news_title: string|null,
-     *     shortDescription: string|null,
-     *     picture: string|null,
-     * }> $results
+     * @param array<array{id: CategoryId, title: string, news_id: NewsId|null, news_title: string|null, shortDescription: string|null, picture: string|null,}> $results
      *
      * @return array<array{
      *     id: CategoryId,

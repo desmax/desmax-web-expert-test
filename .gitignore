@@ -34,3 +34,7 @@ phpstan.neon
 ###< symfony/asset-mapper ###
 
 public/uploads/
+
+###> qossmic/deptrac ###
+/.deptrac.cache
+###< qossmic/deptrac ###

@@ -60,6 +60,9 @@ jobs:
         name: Run PHPStan
         run: docker compose exec php vendor/bin/phpstan
       -
+        name: Run deptrac
+        run: docker compose exec php vendor/bin/deptrac
+      -
         name: Run PHPUnit
         run: docker compose exec -T php bin/phpunit
       -
