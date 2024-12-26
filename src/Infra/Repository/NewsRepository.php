@@ -10,6 +10,7 @@ use App\Domain\Entity\Category\Category;
 use App\Domain\Entity\News\News;
 use App\Domain\Model\NewsId;
 use App\Infra\Model\NewsId as NewsIdImpl;
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function sprintf;
@@ -53,7 +54,7 @@ class NewsRepository extends BaseRepository implements NewsRepositoryInterface
     {
         return $this->createQueryBuilder('n')
             ->join('n.categories', 'c')
-            ->where('c = :category')
+            ->andWhere('c = :category')
             ->setParameter('category', $category)
             ->orderBy('n.createdAt', 'DESC')
             ->andWhere('n.deletedAt IS NULL')
@@ -68,10 +69,25 @@ class NewsRepository extends BaseRepository implements NewsRepositoryInterface
         return (int) $this->createQueryBuilder('n')
             ->select('COUNT(n.id)')
             ->join('n.categories', 'c')
-            ->where('c = :category')
+            ->andWhere('c = :category')
             ->setParameter('category', $category)
             ->andWhere('n.deletedAt IS NULL')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function getTopNewsByComments(DateTimeImmutable $from, DateTimeImmutable $to, int $limit): array
+    {
+        return $this->createQueryBuilder('n')
+            ->select('n as news', 'COUNT(c.id) as commentCount')
+            ->leftJoin('n.comments', 'c')
+            ->andWhere('c.createdAt BETWEEN :from AND :to')
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+            ->groupBy('n.id')
+            ->orderBy('commentCount', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 }

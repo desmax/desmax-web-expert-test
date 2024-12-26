@@ -7,6 +7,7 @@ namespace App\App\News;
 use App\Domain\Entity\Category\Category;
 use App\Domain\Entity\News\News;
 use App\Domain\Model\NewsId;
+use DateTimeImmutable;
 
 interface NewsRepositoryInterface
 {
@@ -21,4 +22,7 @@ interface NewsRepositoryInterface
     public function findByCategory(Category $category, int $page = 1, int $limit = 10): array;
 
     public function getTotalByCategory(Category $category): int;
+
+    /** @return array<array{news: News, commentCount: int}> */
+    public function getTopNewsByComments(DateTimeImmutable $from, DateTimeImmutable $to, int $limit): array;
 }
