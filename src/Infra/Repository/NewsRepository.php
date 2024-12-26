@@ -6,6 +6,7 @@ namespace App\Infra\Repository;
 
 use App\App\Exception\NotFound;
 use App\App\News\NewsRepositoryInterface;
+use App\Domain\Entity\Category\Category;
 use App\Domain\Entity\News\News;
 use App\Domain\Model\NewsId;
 use App\Infra\Model\NewsId as NewsIdImpl;
@@ -46,5 +47,31 @@ class NewsRepository extends BaseRepository implements NewsRepositoryInterface
     protected function convertStringToEntityId(string $id): NewsId
     {
         return new NewsIdImpl($id);
+    }
+
+    public function findByCategory(Category $category, int $page = 1, int $limit = 10): array
+    {
+        return $this->createQueryBuilder('n')
+            ->join('n.categories', 'c')
+            ->where('c = :category')
+            ->setParameter('category', $category)
+            ->orderBy('n.createdAt', 'DESC')
+            ->andWhere('n.deletedAt IS NULL')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getTotalByCategory(Category $category): int
+    {
+        return (int) $this->createQueryBuilder('n')
+            ->select('COUNT(n.id)')
+            ->join('n.categories', 'c')
+            ->where('c = :category')
+            ->setParameter('category', $category)
+            ->andWhere('n.deletedAt IS NULL')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }
