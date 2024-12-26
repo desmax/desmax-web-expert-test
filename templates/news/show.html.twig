@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block meta_description %}{{ news.shortDescription }}{% endblock %}
+
+{% block content %}
+    <article class="news-article">
+        <header>
+            <h1>{{ news.title }}</h1>
+            <div class="news-metadata">
+                <time datetime="{{ news.createdAt|date('Y-m-d H:i') }}">
+                    {{ news.createdAt|date('d M Y') }}
+                </time>
+                <div class="categories">
+                    {% for category in news.categories %}
+                        <a href="{{ path('app_category_show', {id: category.id}) }}" class="category-badge">
+                            {{ category.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </header>
+
+        {% if news.picture %}
+            <img src="{{ asset('uploads/news/' ~ news.picture) }}"
+                 alt="{{ news.title }}"
+                 class="news-image">
+        {% endif %}
+
+        <div class="news-content">
+            {{ news.content|nl2br }}
+        </div>
+
+        <section class="comments-section">
+            <h2>Comments</h2>
+            {% for comment in news.comments %}
+                <div class="comment">
+                    <div class="comment-metadata">
+                        <span class="comment-author">{{ comment.author.email }}</span>
+                        <time datetime="{{ comment.createdAt|date('Y-m-d H:i') }}">
+                            {{ comment.createdAt|date('d M Y H:i') }}
+                        </time>
+                    </div>
+                    <div class="comment-content">
+                        {{ comment.content|nl2br }}
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    </article>
+{% endblock %}

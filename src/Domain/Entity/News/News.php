@@ -26,7 +26,7 @@ class News
     private ?string $picture = null;
 
     public function __construct(
-        private readonly NewsId $id,
+        private NewsId $id,
         private User $author,
         private string $title,
         private string $shortDescription,

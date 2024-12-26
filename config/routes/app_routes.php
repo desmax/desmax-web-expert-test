@@ -6,6 +6,7 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use App\Infra\Controller\FeedController;
 use App\Infra\Controller\LoginController;
+use App\Infra\Controller\NewsShowController;
 
 return static function (RoutingConfigurator $routes): void {
     $routes->add('app_feed', '/')
@@ -17,7 +18,7 @@ return static function (RoutingConfigurator $routes): void {
         ->methods([Request::METHOD_GET]);
 
     $routes->add('app_news_show', '/news/{id}')
-        ->controller(FeedController::class)
+        ->controller(NewsShowController::class)
         ->methods([Request::METHOD_GET]);
 
     $routes->add('app_login', '/login')

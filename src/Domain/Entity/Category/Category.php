@@ -20,7 +20,7 @@ class Category
     private Collection $news;
 
     public function __construct(
-        private readonly CategoryId $id,
+        private CategoryId $id,
         private string $title,
     ) {
         $this->createdAt = new DateTimeImmutable();

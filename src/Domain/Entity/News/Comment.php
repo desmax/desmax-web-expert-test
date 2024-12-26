@@ -15,7 +15,7 @@ class Comment
     private ?DateTimeImmutable $deletedAt = null;
 
     public function __construct(
-        private readonly CommentId $id,
+        private CommentId $id,
         private News $news,
         private readonly User $author,
         private string $content,

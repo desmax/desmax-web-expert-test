@@ -29,7 +29,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?DateTimeImmutable $updatedAt = null;
 
     public function __construct(
-        private readonly UserId $id,
+        private UserId $id,
         private readonly string $email,
     ) {
         // This generates a tmp password. This way we can create a user object without a password and later set it
