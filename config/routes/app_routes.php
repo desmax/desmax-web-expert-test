@@ -12,6 +12,14 @@ return static function (RoutingConfigurator $routes): void {
         ->controller(FeedController::class)
         ->methods([Request::METHOD_GET]);
 
+    $routes->add('app_category_show', '/category/{id}')
+        ->controller(FeedController::class)
+        ->methods([Request::METHOD_GET]);
+
+    $routes->add('app_news_show', '/news/{id}')
+        ->controller(FeedController::class)
+        ->methods([Request::METHOD_GET]);
+
     $routes->add('app_login', '/login')
         ->controller(LoginController::class)
         ->methods([Request::METHOD_GET, Request::METHOD_POST]);

@@ -97,10 +97,10 @@ class News
         return $this->updatedAt;
     }
 
-    /** @return Collection<int, Category> */
-    public function getCategories(): Collection
+    /** @return array<Category> */
+    public function getCategories(): array
     {
-        return $this->categories;
+        return $this->categories->toArray();
     }
 
     public function addCategory(Category $category): self
@@ -119,10 +119,12 @@ class News
         return $this;
     }
 
-    /** @return Collection<int, Comment> */
-    public function getComments(): Collection
+    /** @return array<Comment> */
+    public function getComments(): array
     {
-        return $this->comments->filter(static fn (Comment $comment): bool => $comment->getDeletedAt() === null);
+        return $this->comments
+            ->filter(static fn (Comment $comment): bool => $comment->getDeletedAt() === null)
+            ->toArray();
     }
 
     public function onPreUpdate(): void

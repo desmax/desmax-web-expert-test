@@ -47,7 +47,7 @@ class NewsDTO
             title: $news->getTitle(),
             shortDescription: $news->getShortDescription(),
             content: $news->getContent(),
-            categories: $news->getCategories()->toArray(),
+            categories: $news->getCategories(),
             currentPicture: $news->getPicture(),
         );
     }

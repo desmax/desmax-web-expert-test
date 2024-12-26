@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infra\Controller\Admin\Category;
 
 use App\Domain\Entity\Category\Category;
+use App\Infra\Repository\CategoryRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Autocomplete\Form\AsEntityAutocompleteField;
@@ -26,6 +27,10 @@ class CategoryAutocompleteField extends AbstractType
             'searchable_fields' => ['title'],
             'security' => 'ROLE_ADMIN',
             'multiple' => true,
+            'query_builder' => static function (CategoryRepository $repository) {
+                return $repository->createQueryBuilder('c')
+                    ->andWhere('c.deletedAt IS NULL');
+            },
         ]);
     }
 

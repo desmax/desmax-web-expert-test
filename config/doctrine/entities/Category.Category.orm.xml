@@ -18,6 +18,8 @@
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
         <field name="deletedAt" type="datetime_immutable" column="deleted_at" nullable="true"/>
 
+        <many-to-many field="news" target-entity="App\Domain\Entity\News\News" mapped-by="categories"/>
+
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="onPreUpdate"/>
         </lifecycle-callbacks>

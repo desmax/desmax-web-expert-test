@@ -1,7 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}News Feed{% endblock %}
-
 {% block content %}
-    <h1>Here will be the news feed!</h1>
+    <div class="categories-grid">
+        {% for category in categories %}
+            <div class="category-card">
+                <h2>{{ category.title }}</h2>
+
+                <div class="news-grid">
+                    {% for news in category.news %}
+                        <div class="news-card">
+                            {% if news.picture %}
+                                <img src="{{ asset('uploads/news/' ~ news.picture) }}" alt="{{ news.title }}" class="news-thumbnail">
+                            {% endif %}
+                            <h3>{{ news.title }}</h3>
+                            <p>{{ news.shortDescription }}</p>
+                            <a href="{{ path('app_news_show', {id: news.id}) }}" class="btn">Read more</a>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <a href="{{ path('app_category_show', {id: category.id}) }}" class="btn">View all news</a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
