@@ -26,6 +26,7 @@
 
         <indexes>
             <index name="idx_categories_title" columns="title"/>
+            <index name="idx_categories_created" columns="created_at"/>
             <index name="idx_categories_deleted" columns="deleted_at"/>
         </indexes>
     </entity>

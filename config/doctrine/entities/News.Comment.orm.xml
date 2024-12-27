@@ -11,7 +11,7 @@
 
         <id name="id" type="comment_id" column="id" />
 
-        <field name="content" type="text" column="content" />
+        <field name="content" type="text" column="content" nullable="false" />
 
         <field name="createdAt" type="datetime_immutable" column="created_at">
             <options>
@@ -21,15 +21,20 @@
 
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
 
-        <field name="deletedAt" type="date_immutable" column="deleted_at" nullable="true"/>
+        <field name="deletedAt" type="datetime_immutable" column="deleted_at" nullable="true"/>
 
         <many-to-one field="news" target-entity="App\Domain\Entity\News\News" inversed-by="comments">
             <join-column name="news_id" referenced-column-name="id" nullable="false" on-delete="CASCADE"/>
         </many-to-one>
 
         <many-to-one field="author" target-entity="App\Domain\Entity\User\User">
-            <join-column name="author_id" referenced-column-name="id" nullable="false"/>
+            <join-column name="author_id" referenced-column-name="id" nullable="false" on-delete="RESTRICT"/>
         </many-to-one>
+
+        <indexes>
+            <index name="idx_comments_created" columns="created_at"/>
+            <index name="idx_comments_deleted" columns="deleted_at"/>
+        </indexes>
     </entity>
 
 </doctrine-mapping>

@@ -14,7 +14,7 @@
         <field name="title" type="string" column="title" length="255" />
         <field name="shortDescription" type="text" column="short_description" />
         <field name="content" type="text" column="content" />
-        <field name="picture" type="string" column="picture" nullable="true" />
+        <field name="picture" type="string" column="picture" length="512" nullable="true" />
 
         <field name="createdAt" type="datetime_immutable" column="created_at">
             <options>
@@ -23,27 +23,31 @@
         </field>
 
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
-
-        <field name="deletedAt" type="date_immutable" column="deleted_at" nullable="true"/>
+        <field name="deletedAt" type="datetime_immutable" column="deleted_at" nullable="true"/>
 
         <many-to-many field="categories" target-entity="App\Domain\Entity\Category\Category" inversed-by="news">
             <join-table name="news_categories">
                 <join-columns>
-                    <join-column name="news_id" referenced-column-name="id" />
+                    <join-column name="news_id" referenced-column-name="id" nullable="false" />
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="category_id" referenced-column-name="id" />
+                    <join-column name="category_id" referenced-column-name="id" nullable="false" />
                 </inverse-join-columns>
             </join-table>
         </many-to-many>
 
-        <one-to-many field="comments" target-entity="App\Domain\Entity\News\Comment" mapped-by="news" />
+        <one-to-many field="comments" target-entity="App\Domain\Entity\News\Comment" mapped-by="news">
+            <cascade>
+                <cascade-remove/>
+            </cascade>
+        </one-to-many>
 
         <many-to-one field="author" target-entity="App\Domain\Entity\User\User">
             <join-column name="author_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
 
         <indexes>
+            <index name="idx_news_title" columns="title"/>
             <index name="idx_news_created" columns="created_at"/>
             <index name="idx_news_deleted" columns="deleted_at"/>
         </indexes>
