@@ -15,7 +15,6 @@
                     <thead>
                     <tr>
                         <th>Title</th>
-                        <th>Author</th>
                         <th>Categories</th>
                         <th>Created</th>
                         <th>Actions</th>
@@ -25,7 +24,6 @@
                     {% for news_item in news %}
                         <tr>
                             <td>{{ news_item.title }}</td>
-                            <td>{{ news_item.author.email }}</td>
                             <td>
                                 {% for category in news_item.categories %}
                                     <span class="badge bg-secondary">{{ category.title }}</span>
