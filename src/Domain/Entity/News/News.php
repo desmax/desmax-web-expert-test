@@ -31,8 +31,9 @@ class News
         private string $title,
         private string $shortDescription,
         private string $content,
+        ?DateTimeImmutable $createdAt = null,
     ) {
-        $this->createdAt  = new DateTimeImmutable();
+        $this->createdAt  = $createdAt ?? new DateTimeImmutable();
         $this->categories = new ArrayCollection();
         $this->comments   = new ArrayCollection();
     }

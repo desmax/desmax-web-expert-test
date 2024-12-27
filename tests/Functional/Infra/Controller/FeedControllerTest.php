@@ -11,6 +11,7 @@ use App\Infra\Model\CategoryId;
 use App\Infra\Model\NewsId;
 use App\Infra\Model\UserId;
 use App\Tests\Functional\WebTestCase;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -36,7 +37,9 @@ class FeedControllerTest extends WebTestCase
             $category4 = new Category(new CategoryId(null), 'randomCategory4');
             $em->persist($category4);
 
-            $news1 = new News(new NewsId(null), $user, 'randomNews1', 'randomNews1Content', 'randomNews1Content');
+            // Category 1 would have 4 news items, first news item is created 1 hour, others are created now
+            // but since we only show 3 latest news, only 3 news items should be shown. randomNews1 is not shown
+            $news1 = new News(new NewsId(null), $user, 'randomNews1', 'randomNews1Content', 'randomNews1Content', new DateTimeImmutable('-1 hour'));
             $news1->addCategory($category1);
             $news1->addCategory($category2);
             $em->persist($news1);
@@ -63,7 +66,6 @@ class FeedControllerTest extends WebTestCase
             $em->persist($news6);
         });
 
-        /** @var Crawler $crawler */
         $crawler = $client->request('GET', '/');
 
         // Verify all categories are present
@@ -79,11 +81,11 @@ class FeedControllerTest extends WebTestCase
         // Verify news distribution per category
         $categoryCards->each(function (Crawler $categoryCard) {
             $categoryTitle = $categoryCard->filter('h2')->text();
-            $newsCards = $categoryCard->filter('.news-card');
+            $newsCards     = $categoryCard->filter('.news-card');
 
             switch ($categoryTitle) {
                 case 'randomCategory1':
-                    self::assertCount(4, $newsCards, 'Category 1 should have 3 news items');
+                    self::assertCount(3, $newsCards, 'Category 1 should have 3 news items');
                     self::assertContains('randomNews4', $this->extractNewsTitle($newsCards));
                     self::assertContains('randomNews5', $this->extractNewsTitle($newsCards));
                     self::assertContains('randomNews6', $this->extractNewsTitle($newsCards));
@@ -105,7 +107,7 @@ class FeedControllerTest extends WebTestCase
             }
 
             // Verify each news card structure
-            $newsCards->each(function (Crawler $newsCard) {
+            $newsCards->each(static function (Crawler $newsCard) {
                 self::assertNotEmpty($newsCard->filter('h3')->text(), 'News title should not be empty');
                 self::assertNotEmpty($newsCard->filter('p')->text(), 'News description should not be empty');
                 self::assertCount(1, $newsCard->filter('.btn'), 'Each news card should have a read more button');
@@ -116,6 +118,7 @@ class FeedControllerTest extends WebTestCase
         });
     }
 
+    /** @return array<mixed> */
     private function extractNewsTitle(Crawler $newsCards): array
     {
         return $newsCards->filter('h3')->extract(['_text']);

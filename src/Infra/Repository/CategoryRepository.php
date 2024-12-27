@@ -7,10 +7,10 @@ namespace App\Infra\Repository;
 use App\App\Category\CategoryRepositoryInterface;
 use App\App\Exception\NotFound;
 use App\Domain\Entity\Category\Category;
-use App\Domain\Entity\News\News;
 use App\Domain\Model\CategoryId;
 use App\Domain\Model\NewsId;
 use App\Infra\Model\CategoryId as CategoryIdImpl;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ManagerRegistry;
 
 use function array_filter;
@@ -54,51 +54,52 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
         return new CategoryIdImpl($id);
     }
 
-    private function getLatestNewsSubquery(int $limit): string
+    /** @return array<array{id: CategoryId, title: string, news_id: NewsId|null, news_title: string|null, shortDescription: string|null, picture: string|null,}> */
+    private function getCategoriesWithNewsQuery(int $limit): array
     {
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('newsSub.id')
-            ->from(News::class, 'newsSub')
-            ->join('newsSub.categories', 'categoriesSub')
-            ->andWhere('categoriesSub = category')
-            ->andWhere('newsSub.deletedAt IS NULL')
-            ->andWhere('categoriesSub.deletedAt IS NULL')
-            ->orderBy('newsSub.createdAt', 'DESC')
-            ->setMaxResults($limit)
-            ->getDQL();
-    }
+        $rsm = new ResultSetMapping();
+        $rsm->addScalarResult('id', 'id', 'category_id')
+            ->addScalarResult('title', 'title')
+            ->addScalarResult('news_id', 'news_id', 'news_id')
+            ->addScalarResult('news_title', 'news_title')
+            ->addScalarResult('short_description', 'shortDescription')
+            ->addScalarResult('picture', 'picture');
 
-    /**
-     * @return array<array{
-     *     id: CategoryId,
-     *     title: string,
-     *     news_id: NewsId|null,
-     *     news_title: string|null,
-     *     shortDescription: string|null,
-     *     picture: string|null,
-     * }>
-     */
-    private function getCategoriesWithNewsQuery(string $newsSubquery): array
-    {
-        /** @var array<array{
-         *     id: CategoryId,
-         *     title: string,
-         *     news_id: NewsId|null,
-         *     news_title: string|null,
-         *     shortDescription: string|null,
-         *     picture: string|null,
-         * }> */
-        return $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('category.id, category.title, news.id as news_id, news.title as news_title, news.shortDescription, news.picture')
-            ->from(Category::class, 'category')
-            ->leftJoin('category.news', 'news', 'WITH', "news.id IN ($newsSubquery)")
-            ->andWhere('category.deletedAt IS NULL')
-            ->orderBy('category.title', 'ASC')
-            ->addOrderBy('news.createdAt', 'DESC')
-            ->getQuery()
-            ->getArrayResult();
+        $sql = '
+        SELECT
+            category.id,
+            category.title,
+            latest_news.id as news_id,
+            latest_news.title as news_title,
+            latest_news.short_description,
+            latest_news.picture,
+            latest_news.created_at
+        FROM categories category
+        LEFT JOIN LATERAL (
+            SELECT
+                news.id,
+                news.title,
+                news.short_description,
+                news.picture,
+                news.created_at
+            FROM news
+            JOIN news_categories nc ON nc.news_id = news.id
+            WHERE
+                nc.category_id = category.id
+                AND news.deleted_at IS NULL
+            ORDER BY news.created_at DESC
+            LIMIT :limit
+        ) latest_news ON true
+        WHERE category.deleted_at IS NULL
+        ORDER BY category.title ASC, latest_news.created_at DESC
+    ';
+
+        $query = $this->getEntityManager()
+            ->createNativeQuery($sql, $rsm)
+            ->setParameter('limit', $limit);
+
+        /** @var array<array{id: CategoryId, title: string, news_id: NewsId|null, news_title: string|null, shortDescription: string|null, picture: string|null,}> */
+        return $query->getArrayResult();
     }
 
     /**
@@ -119,9 +120,9 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
     {
         $categorized = [];
         foreach ($results as $row) {
-            $categoryId = $row['id']->value;
-            if (! array_key_exists($categoryId, $categorized)) {
-                $categorized[$categoryId] = [
+            $categoryIdString = (string) $row['id'];
+            if (! array_key_exists($categoryIdString, $categorized)) {
+                $categorized[$categoryIdString] = [
                     'id' => $row['id'],
                     'title' => $row['title'],
                     'news' => [],
@@ -129,7 +130,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
             }
 
             if ($row['news_id'] !== null) {
-                $categorized[$categoryId]['news'][] = [
+                $categorized[$categoryIdString]['news'][] = [
                     'id' => $row['news_id'],
                     'title' => (string) $row['news_title'],
                     'shortDescription' => (string) $row['shortDescription'],
@@ -145,8 +146,7 @@ class CategoryRepository extends BaseRepository implements CategoryRepositoryInt
 
     public function listCategoriesWithLatestNews(int $newsLimit): array
     {
-        $newsSubquery = $this->getLatestNewsSubquery($newsLimit);
-        $results      = $this->getCategoriesWithNewsQuery($newsSubquery);
+        $results = $this->getCategoriesWithNewsQuery($newsLimit);
 
         return $this->transformQueryResults($results);
     }
