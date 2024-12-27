@@ -18,11 +18,16 @@
         <field name="updatedAt" type="datetime_immutable" column="updated_at" nullable="true"/>
         <field name="deletedAt" type="datetime_immutable" column="deleted_at" nullable="true"/>
 
-        <many-to-many field="news" target-entity="App\Domain\Entity\News\News" mapped-by="categories"/>
+        <many-to-many field="news" target-entity="App\Domain\Entity\News\News" mapped-by="categories" inversed-by="news"/>
 
         <lifecycle-callbacks>
             <lifecycle-callback type="preUpdate" method="onPreUpdate"/>
         </lifecycle-callbacks>
+
+        <indexes>
+            <index name="idx_categories_title" columns="title"/>
+            <index name="idx_categories_deleted" columns="deleted_at"/>
+        </indexes>
     </entity>
 
 </doctrine-mapping>

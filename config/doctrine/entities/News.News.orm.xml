@@ -26,7 +26,7 @@
 
         <field name="deletedAt" type="date_immutable" column="deleted_at" nullable="true"/>
 
-        <many-to-many field="categories" target-entity="App\Domain\Entity\Category\Category">
+        <many-to-many field="categories" target-entity="App\Domain\Entity\Category\Category" inversed-by="news">
             <join-table name="news_categories">
                 <join-columns>
                     <join-column name="news_id" referenced-column-name="id" />
@@ -42,6 +42,11 @@
         <many-to-one field="author" target-entity="App\Domain\Entity\User\User">
             <join-column name="author_id" referenced-column-name="id" nullable="false"/>
         </many-to-one>
+
+        <indexes>
+            <index name="idx_news_created" columns="created_at"/>
+            <index name="idx_news_deleted" columns="deleted_at"/>
+        </indexes>
     </entity>
 
 </doctrine-mapping>
