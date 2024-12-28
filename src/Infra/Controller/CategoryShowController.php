@@ -17,8 +17,8 @@ class CategoryShowController extends AbstractController
 {
     public function __invoke(Category $category, NewsRepositoryInterface $newsRepository, Request $request): Response
     {
-        $page  = max(1, $request->query->getInt('page', 10));
-        $limit = 1;
+        $page  = max(1, $request->query->getInt('page', 1));
+        $limit = 10;
 
         $news = $newsRepository->findByCategory(
             category: $category,
