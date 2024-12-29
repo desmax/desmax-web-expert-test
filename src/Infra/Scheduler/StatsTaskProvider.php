@@ -19,8 +19,7 @@ final readonly class StatsTaskProvider implements ScheduleProviderInterface
     {
         $schedule = new Schedule();
 
-        // TODO change to weekly after debugging
-        $schedule->add(RecurringMessage::cron('* * * * *', $this->newsStatisticsService->generateEventForLastWeek()));
+        $schedule->add(RecurringMessage::cron('@weekly', $this->newsStatisticsService->generateEventForLastWeek()));
 
         return $schedule;
     }
