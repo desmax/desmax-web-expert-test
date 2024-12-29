@@ -18,7 +18,7 @@ class CategoriesListController extends AbstractController
     public function __invoke(Request $request): Response
     {
         $offset = $request->query->getInt('offset');
-        $limit  = $request->query->getInt('limit', 10);
+        $limit  = $request->query->getInt('limit', 50);
 
         $categories = $this->categoryRepository->getList($limit, $offset);
 

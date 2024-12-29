@@ -50,7 +50,7 @@ class NewsRepository extends BaseRepository implements NewsRepositoryInterface
         return new NewsIdImpl($id);
     }
 
-    public function findByCategory(Category $category, int $page = 1, int $limit = 10): array
+    public function findByCategory(Category $category, int $page, int $limit): array
     {
         return $this->createQueryBuilder('n')
             ->join('n.categories', 'c')

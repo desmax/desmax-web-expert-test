@@ -19,7 +19,7 @@ interface NewsRepositoryInterface
     public function archive(News $news): void;
 
     /** @return News[] */
-    public function findByCategory(Category $category, int $page = 1, int $limit = 10): array;
+    public function findByCategory(Category $category, int $page, int $limit): array;
 
     public function getTotalByCategory(Category $category): int;
 
